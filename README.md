@@ -1,31 +1,50 @@
-## React Tutorial – The Beginners Guide to Learning React JS in 2020
+# React + TypeScript + Vite
 
-[To follow this React tutorial](https://ibaslogic.com/blog/react-tutorial-for-beginners/)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### Clone the starter project
+Currently, two official plugins are available:
 
-You can download or clone this project by running this command from your terminal:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-```
-git clone https://github.com/Ibaslogic/simple-todo-app
-```
+## Expanding the ESLint configuration
 
-This will create a directory in the name of the project folder.
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-Once you have the project files and folders bootstrapped, open it with your text editor.
+- Configure the top-level `parserOptions` property like this:
 
-Next, switch inside the project directory and run:
-
-```
-npm install
-```
-
-This will install all the necessary dependencies in the local `node_modules` folder.
-
-Finally, start your development server by running:
-
-```
-npm start
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-You should see the app in your browser address bar at [http://localhost:3000](http://localhost:3000)
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```

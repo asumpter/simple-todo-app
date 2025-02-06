@@ -7,12 +7,14 @@ interface IInputTodo {
 export const InputTodo: FC<IInputTodo> = ({ addTodoProps }) => {
   const [title, setTitle] = useState('');
 
-  // TODO update type here
-  const onChange = (e) => {
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
   };
-  // TODO update type here
-  const handleSubmit = (e) => {
+  interface IHandleSubmit {
+    (e: React.FormEvent<HTMLFormElement>): void;
+  }
+
+  const handleSubmit: IHandleSubmit = (e) => {
     e.preventDefault();
     addTodoProps(title);
     setTitle('');

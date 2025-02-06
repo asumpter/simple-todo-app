@@ -5,9 +5,15 @@ import { InputTodo } from './InputTodo';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 
+export interface ITodo {
+  id: string;
+  title: string;
+  completed: boolean;
+  assignedUser: string;
+}
+
 export const TodoContainer = () => {
-  // TODO add a todo model here and use everywhere else
-  const [todos, setTodos] = useState([
+  const [todos, setTodos] = useState<ITodo[]>([
     {
       id: uuidv4(),
       title: 'Setup development environment',

@@ -1,12 +1,8 @@
 import { FC } from 'react';
+import { ITodo } from './TodoContainer';
 
 interface ITodoItem {
-  todo: {
-    id: string;
-    title: string;
-    completed: boolean;
-    assignedUser: string;
-  };
+  todo: ITodo;
   handleCompleted: (id: string) => void;
   deleteTodoProps: (id: string) => void;
   setShowModal: (id: string) => void;
@@ -27,6 +23,7 @@ export const TodoItem: FC<ITodoItem> = ({
         onChange={() => handleCompleted(id)}
       />
       <span style={completed ? completedStyle : undefined}>{title}</span>
+      {/* only show if there is an assiged user */}
       {todo.assignedUser && (
         <span>
           <span
@@ -41,6 +38,7 @@ export const TodoItem: FC<ITodoItem> = ({
         </span>
       )}
       <button onClick={() => deleteTodoProps(id)}>Delete</button>
+      {/* only show the edit button if the todo is not completed */}
       {!completed && <button onClick={() => setShowModal(id)}>Edit</button>}
     </li>
   );

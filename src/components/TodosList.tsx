@@ -2,10 +2,10 @@ import { FC, Fragment, useState } from 'react';
 import { TodoItem } from './TodoItem';
 import { createPortal } from 'react-dom';
 import { EditTodoModal } from './EditTodoModal';
+import { ITodo } from './TodoContainer';
 
 interface ITodoList {
-  // TODO update with correct TS model
-  todos: any[];
+  todos: ITodo[];
   handleCompleted: (id: string) => void;
   deleteTodoProps: (id: string) => void;
   handleUpdateTodo: (id: string, title: string, assignedUser: string) => void;
@@ -17,8 +17,9 @@ export const TodosList: FC<ITodoList> = ({
   deleteTodoProps,
   handleUpdateTodo,
 }) => {
-  // TODO update type here
-  const [showModal, setShowModal] = useState<any>({});
+  const [showModal, setShowModal] = useState<{
+    [key: string]: boolean;
+  }>({});
   return (
     <div>
       {todos.map((todo) => {

@@ -20,7 +20,7 @@ export const EditTodoModal: FC<IEditTodoModal> = ({
     currentTodo.assignedUser ?? ''
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateTodo(title, assignedUser);
     handleClose();

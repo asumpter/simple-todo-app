@@ -5,15 +5,18 @@ interface ITodoItem {
     id: string;
     title: string;
     completed: boolean;
+    assignedUser: string;
   };
-  handleChangeProps: (id: string) => void;
+  handleCompleted: (id: string) => void;
   deleteTodoProps: (id: string) => void;
+  setShowModal: (id: string) => void;
 }
 
 export const TodoItem: FC<ITodoItem> = ({
   todo,
-  handleChangeProps,
+  handleCompleted,
   deleteTodoProps,
+  setShowModal,
 }) => {
   const { completed, id, title } = todo;
   return (
@@ -21,10 +24,24 @@ export const TodoItem: FC<ITodoItem> = ({
       <input
         type="checkbox"
         checked={completed}
-        onChange={() => handleChangeProps(id)}
+        onChange={() => handleCompleted(id)}
       />
-      <button onClick={() => deleteTodoProps(id)}>Delete</button>
       <span style={completed ? completedStyle : undefined}>{title}</span>
+      {todo.assignedUser && (
+        <span>
+          <span
+            style={{
+              marginLeft: '10px',
+              fontSize: '1.5rem',
+              textDecoration: completed ? 'line-through' : 'none',
+            }}
+          >
+            Assigned User: {todo.assignedUser}
+          </span>
+        </span>
+      )}
+      <button onClick={() => deleteTodoProps(id)}>Delete</button>
+      {!completed && <button onClick={() => setShowModal(id)}>Edit</button>}
     </li>
   );
 };

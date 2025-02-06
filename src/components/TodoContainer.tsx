@@ -6,28 +6,48 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 
 export const TodoContainer = () => {
+  // TODO add a todo model here and use everywhere else
   const [todos, setTodos] = useState([
     {
       id: uuidv4(),
       title: 'Setup development environment',
       completed: true,
+      assignedUser: '',
     },
     {
       id: uuidv4(),
       title: 'Develop website and add content',
       completed: false,
+      assignedUser: '',
     },
     {
       id: uuidv4(),
       title: 'Deploy to live server',
       completed: false,
+      assignedUser: '',
     },
   ]);
-  const handleChange = (id: string) => {
+  const handleCompleted = (id: string) => {
     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
           todo.completed = !todo.completed;
+        }
+        return todo;
+      })
+    );
+  };
+
+  const handleUpdateTodo = (
+    id: string,
+    title: string,
+    assignedUser: string
+  ) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          todo.title = title;
+          todo.assignedUser = assignedUser;
         }
         return todo;
       })
@@ -43,6 +63,7 @@ export const TodoContainer = () => {
       id: uuidv4(),
       title: title,
       completed: false,
+      assignedUser: '',
     };
     setTodos([...todos, newTodo]);
   };
@@ -52,8 +73,9 @@ export const TodoContainer = () => {
       <InputTodo addTodoProps={addTodoItem} />
       <TodosList
         todos={todos}
-        handleChangeProps={handleChange}
+        handleCompleted={handleCompleted}
         deleteTodoProps={delTodo}
+        handleUpdateTodo={handleUpdateTodo}
       />
     </div>
   );
